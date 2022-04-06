@@ -6,6 +6,8 @@ import winsound
 import json
 from os import path
 
+data = []
+
 if path.isfile('log.json') is False:
     with open('log.json','w') as f:
         f.write("[]")
@@ -19,18 +21,24 @@ def pomo_end():
     pomo_beep()
     print("\nDone!")
     print("Category?")
+    timestamp = time.time()
     cat = input()
     print("Project?")
     proj = input()
     numprev = 0
-    timestamp = time.time()
+    get_data()
+    add_data(timestamp,proj,cat)
+    numprev = len([x for x in data if x["Category"]==cat])
+    print("Logged. You've now completed "+str(numprev)+" pomodoros in this category.")
+
+def get_data():
     with open("log.json") as f:
         data = json.load(f)
+
+def add_data(timestamp,proj,cat):
     data.append({"Timestamp": str(timestamp), "Project": proj, "Category": cat})
-    numprev = len([x for x in data if x["Category"]==cat])
     with open("log.json",'w') as f:
         json.dump(data, f)
-    print("Logged. You've now completed "+str(numprev)+" pomodoros in this category.")
 
 def start_countdown(minutes):
     minute_ctd(minutes*60)
