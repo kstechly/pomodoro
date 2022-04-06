@@ -7,7 +7,7 @@ import json
 from os import path
 import requests
 
-data = []
+full_data = []
 api_url = "http://localhost:5000"
 
 
@@ -29,22 +29,26 @@ def pomo_end():
     print("Project?")
     proj = input()
     numprev = 0
-    data = get_data()
-    add_data(data,timestamp,proj,cat)
-    numprev = len([x for x in data if x["Category"]==cat])
-    print("Logged. You've now completed "+str(numprev)+" pomodoros in this category.")
+    full_data = get_data()
+    response = add_data(timestamp,proj,cat)
+    numprev = len([x for x in full_data if x["Category"]==cat])
+    if response.status_code == 200:
+        print("Logged. You've now completed "+str(numprev+1)+" pomodoros in this category.")
+    else:
+        print(response.status_code)
 
 def get_data():
     #with open("log.json") as f:
     #    return json.load(f)
     return requests.get(api_url+"/get").json()
 
-def add_data(data, timestamp,proj,cat):
+def add_data(timestamp,proj,cat):
     #data.append({"Timestamp": str(timestamp), "Project": proj, "Category": cat})
-    #with open("log.json",'w') as f:
+    #with open("log.json",'w') as f:p
     #    json.dump(data, f)
-    query = {'Timestamp':timestamp, 'Project':proj,'Category':cat}
-    response = requests.get(api_url+"/post", params=query)
+    new_data = {'Timestamp':timestamp, 'Project':proj,'Category':cat}
+    response = requests.post(api_url+"/post", data=new_data)
+    return response
 
 def start_countdown(minutes):
     minute_ctd(minutes*60)
