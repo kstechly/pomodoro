@@ -11,10 +11,10 @@ full_data = []
 api_url = "http://54.151.67.160:5000"
 
 
-if path.isfile('log.json') is False:
-    with open('log.json','w') as f:
-        f.write("[]")
-        print("Created blank log file.")
+#if path.isfile('log.json') is False:
+#    with open('log.json','w') as f:
+#        f.write("[]")
+#        print("Created blank log file.")
 
 def pomo_beep():
     for x in range(0,3):

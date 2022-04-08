@@ -1,3 +1,3 @@
 import pomodoro
 
-pomodoro.start_countdown(0)
+pomodoro.start_countdown(10)
