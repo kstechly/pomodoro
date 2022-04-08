@@ -8,7 +8,7 @@ from os import path
 import requests
 
 full_data = []
-api_url = "http://localhost:5000"
+api_url = "http://54.151.67.160:5000"
 
 
 if path.isfile('log.json') is False:
