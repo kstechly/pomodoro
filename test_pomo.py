@@ -9,3 +9,4 @@ def test_get_data_from_remote():
 
 def test_test():
     assert True
+

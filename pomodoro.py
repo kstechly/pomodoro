@@ -8,13 +8,21 @@ from os import path
 import requests
 
 full_data = []
-api_url = "http://54.151.67.160:5000"
+config = {}
+api_url = ""
 
 
-#if path.isfile('log.json') is False:
-#    with open('log.json','w') as f:
-#        f.write("[]")
-#        print("Created blank log file.")
+if path.isfile('config.json') is False:
+    with open('config.json','w') as f:
+        f.write("{'api_url':''}")
+        print("Created empty config file.")
+        print("Please edit config file to include server url. Logging disabled.")
+
+with open('config.json','r') as f:
+    config = json.load(f)
+    api_url = config['api_url']
+    if api_url == "":
+        print("Please edit config file to include server url. Logging disabled.")
 
 def pomo_beep():
     for x in range(0,3):
